@@ -9,5 +9,5 @@ import (
 func main() {
 	fmt.Println("Извлечение...")
 	b := read.Read(os.Args[1])
-	read.Sort(b)
+	read.SortI(b)
 }

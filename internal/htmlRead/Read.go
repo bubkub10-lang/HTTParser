@@ -16,17 +16,17 @@ func Read(url string) []byte {
 		return nil
 	} else {
 		defer req.Body.Close()
-		B, err := io.ReadAll(req.Body)
+		b, err := io.ReadAll(req.Body)
 		if err != nil {
 			fmt.Println("ReadFATAL")
 			return nil
 		} else {
-			return B
+			return b
 		}
 	}
 }
 
-func Sort(x []byte) {
+func SortI(x []byte) {
 	var sliced []string
 	stay := [29]string{
 		"p",
@@ -67,12 +67,15 @@ func Sort(x []byte) {
 		if tagType == html.ErrorToken {
 			break
 		}
-		tag := html.StartTagToken
-		strTag := string(tag)
-		for _, stayed := range stay {
-			if strings.ContainsAny(strTag, stayed) {
-				sliced = append(sliced, strTag)
+		if tagType == html.StartTagToken {
+			strTag := tokenizer.Token().Data
+			for _, stayed := range stay {
+				if strTag == stayed {
+					sliced = append(sliced, strTag)
+				}
 			}
 		}
 	}
+	fmt.Println(sliced)
+
 }
